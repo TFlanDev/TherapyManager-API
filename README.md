@@ -1,14 +1,15 @@
 
 
-#Create and activate virtual enviornment
-python -m venv venv
-source venv/Scripts/activate
+# Create and activate virtual enviornment  
+python -m venv venv  
+source venv/Scripts/activate  
 
-#install dependencies 
-pip install fastapi
-pip install "uvicorn[standard]"
-pip install sqlalchemy
-pip install psycopg2
+# install dependencies 
+pip install 'fastapi[standard]'    
+pip install sqlalchemy  
+pip install psycopg2  
 
-#run server
-$ uvicorn app:app --reload
+# run server  
+Navigate to folder app.py is located in  
+fastapi dev 
+
