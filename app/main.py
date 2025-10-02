@@ -26,3 +26,7 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 @app.get("/patient/{patient_id}", response_model=schemas.PatientGet)
 def get_patient(patient_id : int, db : Session = Depends(get_db)):
     return crud.get_patient(db, patient_id=patient_id)
+
+@app.put("/patient/{patient_id}/{therapist_id}/", response_model=schemas.PatientUpdate)
+def update_patient(patient_id : int, therapist_id : int, db : Session = Depends(get_db)):
+    return crud.update_patient(db, patient_id, therapist_id)
