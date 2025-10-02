@@ -18,4 +18,4 @@ def get_db():
         #use yield instead of return for generator function that produces a sequence of values over time
         yield db
     finally:
-        db.close
+        db.close()
