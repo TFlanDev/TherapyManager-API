@@ -1,11 +1,15 @@
+from typing import Optional
 from sqlalchemy.orm import Session
 from . import database, models, schemas
 
 def get_therapist(db : Session, therapist_id : int):
     return db.query(models.Therapist).filter(models.Therapist.id == therapist_id).first()
 
-def get_all_therapists(db : Session):
-    return db.query(models.Therapist).all()
+def get_all_therapists(db : Session, include : Optional[str] = None):
+    if include and 'patients' in include:
+        return db.query(models.Therapist).all()
+    return db.query(models.Therapist.id, models.Therapist.name)
+
 
 def create_therapist(db : Session, therapist: schemas.TherapistCreate):
     new_therapist = models.Therapist(name=therapist.name)

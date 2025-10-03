@@ -1,10 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
-"""
-Patient Schema
-"""
-
 class PatientBase(BaseModel):
     name : str
 
@@ -28,9 +24,6 @@ class PatientGet(PatientBase):
     class Config:
         from_attributes = True
 
-"""
-Therapist Schema
-"""
 
 class TherapistBase(BaseModel):
     name : str
@@ -40,8 +33,12 @@ class TherapistCreate(TherapistBase):
 
 class TherapistGet(TherapistBase):
     id : int
-    patients : Optional[List[PatientGet]] = None
+    patients : List[PatientGet]
+    class Config:
+        from_attributes = True
 
+class TherapistGetSimple(TherapistBase):
+    id : int
     class Config:
         from_attributes = True
 

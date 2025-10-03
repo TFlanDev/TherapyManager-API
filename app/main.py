@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import FastAPI, Depends, HTTPException
+from typing import List, Optional, Union
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from . import models, schemas, crud
 from .database import SessionLocal, engine, get_db
@@ -14,9 +14,9 @@ def create_therapist(therapist: schemas.TherapistCreate, db: Session = Depends(g
 def get_therapist(therapist_id : int, db : Session = Depends(get_db)):
     return crud.get_therapist(db, therapist_id=therapist_id)
 
-@app.get("/therapists/", response_model=List[schemas.TherapistGet])
-def get_all_therapists(db : Session = Depends(get_db)):
-    return crud.get_all_therapists(db)
+@app.get("/therapists/", response_model=Union[List[schemas.TherapistGet], List[schemas.TherapistGetSimple]])
+def get_all_therapists(db : Session = Depends(get_db), include : Optional[str] = None):
+    return crud.get_all_therapists(db, include)
 
 
 @app.post("/create/patient/", response_model=schemas.PatientCreate)
