@@ -11,11 +11,6 @@ optionally assign new patient to a therapist
 class PatientCreate(PatientBase):
     therapist_id : Optional[int] = None
 
-"""
-Assign existing patient to a therapist
-"""
-class PatientUpdate(PatientBase):
-    therapist_id : int
 
 class PatientGet(PatientBase):
     id: int
