@@ -27,6 +27,10 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 def get_patient(patient_id : int, db : Session = Depends(get_db)):
     return crud.get_patient(db=db, patient_id=patient_id)
 
+@app.get("/patients/", response_model=List[schemas.PatientGet])
+def get_all_patients(db : Session = Depends(get_db)):
+    return crud.get_all_patients(db=db)
+
 @app.put("/patient/{patient_id}/", response_model=schemas.PatientGet)
 def update_patient(patient_id : int, therapist_id : int, db : Session = Depends(get_db)):
     return crud.update_patient(db=db, patient_id=patient_id, therapist_id=therapist_id)

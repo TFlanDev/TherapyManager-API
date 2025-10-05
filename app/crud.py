@@ -31,6 +31,9 @@ def create_patient(db : Session, patient: schemas.PatientCreate):
 def get_patient(db : Session, patient_id : int):
     return db.query(models.Patient).filter(models.Patient.id == patient_id).first()
 
+def get_all_patients(db : Session):
+    return db.query(models.Patient).all()
+
 def update_patient(db : Session, patient_id : int, therapist_id : int):
     patient_to_update = db.query(models.Patient).filter(models.Patient.id == patient_id).first()
     patient_to_update.therapist_id = therapist_id
