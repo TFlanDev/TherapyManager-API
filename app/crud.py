@@ -7,10 +7,11 @@ def get_therapist(db : Session, therapist_id : int, include : Optional[str] = No
         return db.query(models.Therapist).filter(models.Therapist.id == therapist_id).first()
     return db.query(models.Therapist.id, models.Therapist.name).filter(models.Therapist.id == therapist_id).first()
 
-def get_all_therapists(db : Session, include : Optional[str] = None):
+def get_all_therapists(db : Session, include : Optional[str] = None, search : Optional[str] = None):
+    search = "" if search is None else search
     if include and 'patients' in include:
-        return db.query(models.Therapist).all()
-    return db.query(models.Therapist.id, models.Therapist.name).all()
+        return db.query(models.Therapist).filter(models.Therapist.name.like(f'%{search}%'))
+    return db.query(models.Therapist.id, models.Therapist.name).filter(models.Therapist.name.like(f'%{search}%'))
 
 
 def create_therapist(db : Session, therapist: schemas.TherapistCreate):
@@ -31,8 +32,9 @@ def create_patient(db : Session, patient: schemas.PatientCreate):
 def get_patient(db : Session, patient_id : int):
     return db.query(models.Patient).filter(models.Patient.id == patient_id).first()
 
-def get_all_patients(db : Session):
-    return db.query(models.Patient).all()
+def get_all_patients(db : Session,  search : Optional[str] = None):
+    search = "" if search is None else search
+    return db.query(models.Patient).filter(models.Patient.name.like(f'%{search}%'))
 
 def update_patient(db : Session, patient_id : int, therapist_id : int):
     patient_to_update = db.query(models.Patient).filter(models.Patient.id == patient_id).first()

@@ -15,8 +15,8 @@ def get_therapist(therapist_id : int, include : Optional[str] = None, db : Sessi
     return crud.get_therapist(db=db, include=include, therapist_id=therapist_id)
 
 @app.get("/therapists/", response_model=Union[List[schemas.TherapistGet], List[schemas.TherapistGetSimple]])
-def get_all_therapists(include : Optional[str] = None, db : Session = Depends(get_db)):
-    return crud.get_all_therapists(db=db, include=include)
+def get_all_therapists(include : Optional[str] = None, search : Optional[str] = None, db : Session = Depends(get_db)):
+    return crud.get_all_therapists(db=db, include=include, search=search)
 
 
 @app.post("/patient/", response_model=schemas.PatientGet)
@@ -28,8 +28,8 @@ def get_patient(patient_id : int, db : Session = Depends(get_db)):
     return crud.get_patient(db=db, patient_id=patient_id)
 
 @app.get("/patients/", response_model=List[schemas.PatientGet])
-def get_all_patients(db : Session = Depends(get_db)):
-    return crud.get_all_patients(db=db)
+def get_all_patients(search : Optional[str] = None, db : Session = Depends(get_db)):
+    return crud.get_all_patients(db=db, search=search)
 
 @app.put("/patient/{patient_id}/", response_model=schemas.PatientGet)
 def update_patient(patient_id : int, therapist_id : int, db : Session = Depends(get_db)):
